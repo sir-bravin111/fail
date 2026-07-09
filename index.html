@@ -461,7 +461,7 @@
             let intervalId = null;
 
             function updateLoading() {
-                if (progress >= 100) {
+                if (progress >= 60) {
                     clearInterval(intervalId);
                     progressFill.style.width = '100%';
                     percentDisplay.textContent = '100%';
