@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WhatsApp Tools - Legal Uses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #fff;
+        }
+        .card {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .btn {
+            background: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .warning {
+            background: #ff6b6b;
+            padding: 15px;
+            border-radius: 5px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="warning">
+        ⚠️ This tool is for educational and legal purposes only
+    </div>
+    
+    <div class="card">
+        <h2>Legitimate WhatsApp Tools</h2>
+        <p>Here are legal things you CAN do with WhatsApp:</p>
+        
+        <ul>
+            <li>✅ Generate WhatsApp link for your profile</li>
+            <li>✅ Create QR codes for your business</li>
+            <li>✅ Schedule messages (with user consent)</li>
+            <li>✅ Backup your OWN messages</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Generate WhatsApp Link</h3>
+        <input type="text" id="phone" placeholder="Enter phone number (without +)" 
+               style="width:100%; padding:10px; margin:10px 0;">
+        <button class="btn" onclick="generateLink()">Create WhatsApp Link</button>
+        <p id="linkOutput" style="margin-top:10px;"></p>
+    </div>
+
+    <div class="card">
+        <h3>Legal Resources</h3>
+        <ul>
+            <li>📱 <a href="https://faq.whatsapp.com" style="color: #25D366;">Official WhatsApp FAQ</a></li>
+            <li>🔒 <a href="https://www.whatsapp.com/legal" style="color: #25D366;">Privacy Policy</a></li>
+            <li>🛡️ <a href="https://www.whatsapp.com/security" style="color: #25D366;">Security Tips</a></li>
+        </ul>
+    </div>
+
+    <div class="card" style="background: #2d1b36;">
+        <h3>Important Notice</h3>
+        <p style="font-size: 14px; line-height: 1.6;">
+            Intercepting someone's WhatsApp messages without their consent is:
+            • Illegal under data protection laws (GDPR, CCPA, etc.)
+            • Violates WhatsApp's Terms of Service
+            • Is considered a cybercrime in most countries
+            • Can result in serious legal consequences
+        </p>
+    </div>
+
+    <script>
+        function generateLink() {
+            const phone = document.getElementById('phone').value;
+            if (phone && phone.length >= 10) {
+                const cleanNumber = phone.replace(/[^0-9]/g, '');
+                const link = `https://wa.me/${cleanNumber}`;
+                document.getElementById('linkOutput').innerHTML = 
+                    `<a href="${link}" target="_blank" style="color:#25D366;">${link}</a>`;
+            } else {
+                alert('Please enter a valid phone number');
+            }
+        }
+    </script>
+</body>
+</html>
