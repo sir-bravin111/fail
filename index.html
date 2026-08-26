@@ -1,95 +1,458 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>WhatsApp Tools - Legal Uses</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 600px;
-            margin: 50px auto;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WhatsApp Security Lab</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        min-height: 100vh;
+        font-family: "Courier New", monospace;
+        background:
+            radial-gradient(circle at top right, #123c32 0, transparent 35%),
+            radial-gradient(circle at bottom left, #071f1a 0, transparent 40%),
+            #030807;
+        color: #d7fff2;
+        overflow-x: hidden;
+    }
+
+    header {
+        padding: 25px 7%;
+        border-bottom: 1px solid #17483b;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(2, 12, 10, .8);
+        backdrop-filter: blur(10px);
+    }
+
+    .logo {
+        font-size: 22px;
+        font-weight: bold;
+        color: #25d366;
+    }
+
+    .status {
+        color: #25d366;
+        font-size: 13px;
+    }
+
+    .status::before {
+        content: "●";
+        margin-right: 7px;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        50% { opacity: .25; }
+    }
+
+    main {
+        width: min(1150px, 92%);
+        margin: 45px auto;
+    }
+
+    .hero {
+        margin-bottom: 35px;
+    }
+
+    .hero h1 {
+        font-size: clamp(30px, 5vw, 55px);
+        color: #fff;
+        margin-bottom: 12px;
+    }
+
+    .hero h1 span {
+        color: #25d366;
+    }
+
+    .hero p {
+        color: #80a99e;
+        max-width: 700px;
+        line-height: 1.7;
+    }
+
+    .warning {
+        margin-top: 20px;
+        padding: 13px 17px;
+        border: 1px solid #7a5d19;
+        background: rgba(122, 93, 25, .12);
+        color: #ffd76a;
+        border-radius: 8px;
+        font-size: 13px;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+    }
+
+    .card {
+        background: rgba(6, 20, 17, .88);
+        border: 1px solid #16483b;
+        border-radius: 14px;
+        padding: 23px;
+        transition: .25s;
+        box-shadow: 0 10px 40px rgba(0,0,0,.25);
+    }
+
+    .card:hover {
+        transform: translateY(-4px);
+        border-color: #25d366;
+        box-shadow: 0 0 25px rgba(37,211,102,.08);
+    }
+
+    .icon {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+
+    .card h3 {
+        color: #fff;
+        margin-bottom: 10px;
+    }
+
+    .card p {
+        color: #769b91;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 18px;
+        padding: 11px;
+        border: 1px solid #25d366;
+        border-radius: 7px;
+        background: transparent;
+        color: #25d366;
+        font-family: inherit;
+        cursor: pointer;
+        transition: .2s;
+    }
+
+    button:hover {
+        background: #25d366;
+        color: #03110c;
+    }
+
+    .terminal {
+        margin-top: 25px;
+        background: #010504;
+        border: 1px solid #17483b;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .terminal-head {
+        padding: 11px 15px;
+        background: #0a1714;
+        color: #6d9389;
+        font-size: 12px;
+    }
+
+    #terminalOutput {
+        height: 230px;
+        padding: 18px;
+        overflow-y: auto;
+        color: #52ef91;
+        font-size: 13px;
+        line-height: 1.8;
+    }
+
+    .line {
+        margin-bottom: 3px;
+    }
+
+    .danger {
+        color: #ff6978;
+    }
+
+    .success {
+        color: #25d366;
+    }
+
+    .info {
+        color: #65bfff;
+    }
+
+    .progress-box {
+        margin-top: 20px;
+        display: none;
+    }
+
+    .progress {
+        height: 8px;
+        background: #10221d;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-top: 10px;
+    }
+
+    .progress-bar {
+        width: 0;
+        height: 100%;
+        background: #25d366;
+        transition: width .2s;
+    }
+
+    .security-score {
+        margin-top: 20px;
+        font-size: 28px;
+        color: #25d366;
+    }
+
+    footer {
+        text-align: center;
+        color: #45685f;
+        font-size: 12px;
+        padding: 40px 10px;
+    }
+
+    @media(max-width: 800px) {
+        .grid {
+            grid-template-columns: 1fr;
+        }
+
+        header {
             padding: 20px;
-            background: #1a1a2e;
-            color: #fff;
         }
-        .card {
-            background: #16213e;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 10px 0;
-        }
-        .btn {
-            background: #25D366;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .warning {
-            background: #ff6b6b;
-            padding: 15px;
-            border-radius: 5px;
-            color: #fff;
-        }
-    </style>
+    }
+</style>
 </head>
+
 <body>
-    <div class="warning">
-        ⚠️ This tool is for educational and legal purposes only
-    </div>
-    
-    <div class="card">
-        <h2>Legitimate WhatsApp Tools</h2>
-        <p>Here are legal things you CAN do with WhatsApp:</p>
-        
-        <ul>
-            <li>✅ Generate WhatsApp link for your profile</li>
-            <li>✅ Create QR codes for your business</li>
-            <li>✅ Schedule messages (with user consent)</li>
-            <li>✅ Backup your OWN messages</li>
-        </ul>
+
+<header>
+    <div class="logo">⬡ WHATSAPP_SECURITY_LAB</div>
+    <div class="status">SIMULATION ONLINE</div>
+</header>
+
+<main>
+
+    <section class="hero">
+        <h1>Security <span>Laboratory</span></h1>
+        <p>
+            An educational cybersecurity dashboard for learning about
+            account security, phishing awareness, password hygiene and
+            defensive security practices.
+        </p>
+
+        <div class="warning">
+            ⚠ EDUCATIONAL SIMULATION — No real WhatsApp accounts,
+            messages, servers or credentials are accessed.
+        </div>
+    </section>
+
+    <section class="grid">
+
+        <div class="card">
+            <div class="icon">🔐</div>
+            <h3>Password Analyzer</h3>
+            <p>
+                Test the strength of a fictional password locally.
+                Nothing is transmitted anywhere.
+            </p>
+            <button onclick="passwordTest()">RUN PASSWORD TEST</button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🎣</div>
+            <h3>Phishing Detector</h3>
+            <p>
+                Simulate detection of suspicious links and common
+                social-engineering warning signs.
+            </p>
+            <button onclick="phishingScan()">SCAN SIMULATION</button>
+        </div>
+
+        <div class="card">
+            <div class="icon">🛡️</div>
+            <h3>Security Audit</h3>
+            <p>
+                Run a fictional defensive audit and receive a simulated
+                security score.
+            </p>
+            <button onclick="securityAudit()">START AUDIT</button>
+        </div>
+
+    </section>
+
+    <div class="progress-box" id="progressBox">
+        <div id="progressText">Running simulation...</div>
+        <div class="progress">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
     </div>
 
-    <div class="card">
-        <h3>Generate WhatsApp Link</h3>
-        <input type="text" id="phone" placeholder="Enter phone number (without +)" 
-               style="width:100%; padding:10px; margin:10px 0;">
-        <button class="btn" onclick="generateLink()">Create WhatsApp Link</button>
-        <p id="linkOutput" style="margin-top:10px;"></p>
-    </div>
+    <section class="terminal">
+        <div class="terminal-head">
+            security-lab@localhost:~$ defensive-simulation
+        </div>
 
-    <div class="card">
-        <h3>Legal Resources</h3>
-        <ul>
-            <li>📱 <a href="https://faq.whatsapp.com" style="color: #25D366;">Official WhatsApp FAQ</a></li>
-            <li>🔒 <a href="https://www.whatsapp.com/legal" style="color: #25D366;">Privacy Policy</a></li>
-            <li>🛡️ <a href="https://www.whatsapp.com/security" style="color: #25D366;">Security Tips</a></li>
-        </ul>
-    </div>
+        <div id="terminalOutput">
+            <div class="line">[SYSTEM] Security Lab initialized.</div>
+            <div class="line info">[INFO] Waiting for simulation...</div>
+        </div>
+    </section>
 
-    <div class="card" style="background: #2d1b36;">
-        <h3>Important Notice</h3>
-        <p style="font-size: 14px; line-height: 1.6;">
-            Intercepting someone's WhatsApp messages without their consent is:
-            • Illegal under data protection laws (GDPR, CCPA, etc.)
-            • Violates WhatsApp's Terms of Service
-            • Is considered a cybercrime in most countries
-            • Can result in serious legal consequences
+    <div class="card" style="margin-top:25px;">
+        <h3>Security Score</h3>
+        <div class="security-score" id="score">-- / 100</div>
+        <p style="margin-top:8px;">
+            This score is generated locally for demonstration purposes.
         </p>
     </div>
 
-    <script>
-        function generateLink() {
-            const phone = document.getElementById('phone').value;
-            if (phone && phone.length >= 10) {
-                const cleanNumber = phone.replace(/[^0-9]/g, '');
-                const link = `https://wa.me/${cleanNumber}`;
-                document.getElementById('linkOutput').innerHTML = 
-                    `<a href="${link}" target="_blank" style="color:#25D366;">${link}</a>`;
-            } else {
-                alert('Please enter a valid phone number');
-            }
+</main>
+
+<footer>
+    WhatsApp Security Lab • Defensive cybersecurity demonstration
+</footer>
+
+<script>
+
+const terminal = document.getElementById("terminalOutput");
+const score = document.getElementById("score");
+const progressBox = document.getElementById("progressBox");
+const progressBar = document.getElementById("progressBar");
+const progressText = document.getElementById("progressText");
+
+function log(text, type="") {
+    const line = document.createElement("div");
+    line.className = "line " + type;
+    line.textContent = text;
+
+    terminal.appendChild(line);
+    terminal.scrollTop = terminal.scrollHeight;
+}
+
+function runProgress(callback) {
+
+    progressBox.style.display = "block";
+    progressBar.style.width = "0%";
+
+    let value = 0;
+
+    const timer = setInterval(() => {
+        value += Math.floor(Math.random() * 12) + 5;
+
+        if (value >= 100) {
+            value = 100;
+            clearInterval(timer);
+
+            progressBar.style.width = "100%";
+
+            setTimeout(() => {
+                progressBox.style.display = "none";
+                callback();
+            }, 400);
+
+        } else {
+            progressBar.style.width = value + "%";
         }
-    </script>
+
+    }, 150);
+}
+
+function passwordTest() {
+
+    log("");
+    log("[PASSWORD] Starting local password-strength simulation...", "info");
+
+    runProgress(() => {
+
+        const levels = [
+            ["WEAK", 35],
+            ["MODERATE", 64],
+            ["STRONG", 91]
+        ];
+
+        const result =
+            levels[Math.floor(Math.random() * levels.length)];
+
+        log("[PASSWORD] Entropy analysis complete.");
+        log("[PASSWORD] Strength: " + result[0],
+            result[1] < 50 ? "danger" : "success");
+
+        score.textContent = result[1] + " / 100";
+    });
+}
+
+function phishingScan() {
+
+    log("");
+    log("[PHISHING] Loading fictional test indicators...", "info");
+
+    runProgress(() => {
+
+        log("[SCAN] Checking suspicious domain patterns...");
+        log("[SCAN] Checking urgent-language indicators...");
+        log("[SCAN] Checking fake verification requests...");
+
+        setTimeout(() => {
+            log("[RESULT] Simulation detected 3 warning indicators.",
+                "danger");
+
+            log("[DEFENSE] Never enter account credentials into suspicious pages.",
+                "success");
+
+            score.textContent = "82 / 100";
+        }, 500);
+    });
+}
+
+function securityAudit() {
+
+    log("");
+    log("[AUDIT] Starting defensive security audit...", "info");
+
+    runProgress(() => {
+
+        const checks = [
+            "Two-step verification",
+            "Device/session awareness",
+            "Phishing awareness",
+            "Password hygiene",
+            "Software updates"
+        ];
+
+        checks.forEach((item, index) => {
+
+            setTimeout(() => {
+                log(
+                    "[CHECK] " +
+                    item +
+                    " ........ PASS",
+                    "success"
+                );
+            }, index * 250);
+
+        });
+
+        setTimeout(() => {
+
+            const finalScore =
+                Math.floor(Math.random() * 16) + 84;
+
+            log("[AUDIT] Defensive audit complete.", "success");
+            log("[AUDIT] No real systems were accessed.");
+            score.textContent = finalScore + " / 100";
+
+        }, checks.length * 250 + 300);
+    });
+}
+
+</script>
+
 </body>
 </html>
+
